@@ -1,4 +1,4 @@
-const SHEET_NAME = 'Training Log';
+const SHEET_NAME = 'Javelin notes';
 
 function doPost(event) {
   const body = JSON.parse(event.postData.contents);
