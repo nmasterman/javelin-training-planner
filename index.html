@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0b0b0a" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>Flight Plan | Javelin training planner</title>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <a class="brand" href="#today" aria-label="Flight Plan home">
+          <span class="brand-mark" aria-hidden="true">FP</span>
+          <span>Flight Plan</span>
+        </a>
+        <div class="topbar-meta">
+          <span class="season-pill"><span class="status-dot"></span> Base phase</span>
+          <button class="icon-button" id="settingsButton" type="button" aria-label="Open settings" title="Settings">&#9881;</button>
+        </div>
+      </header>
+
+      <nav class="view-tabs" aria-label="Planner views">
+        <button class="view-tab active" type="button" data-view="plan" aria-selected="true">Training plan</button>
+        <button class="view-tab" type="button" data-view="coaching" aria-selected="false">Coaching lens</button>
+      </nav>
+
+      <main>
+        <section class="hero plan-view" id="today">
+          <div class="hero-copy">
+            <p class="eyebrow" id="todayLabel">Friday, October 16, 2026</p>
+            <h1>Build the throw<br /><em>one day at a time.</em></h1>
+            <p class="hero-intro">A clear rhythm for speed, strength, and a javelin that keeps finding more runway.</p>
+          </div>
+          <div class="readiness-card">
+            <div class="readiness-ring"><strong id="weekProgress">0%</strong><span>week done</span></div>
+            <div>
+              <p class="card-kicker">This week's rhythm</p>
+              <h2 id="weekSummary">0 of 6 sessions</h2>
+              <p class="muted">Consistency compounds.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="workbook-bar plan-view">
+          <div>
+            <p class="eyebrow">From your training log</p>
+            <h2 id="workbookWeekLabel">Week 11 / Specific preparation</h2>
+          </div>
+          <div class="workbook-details">
+            <span><strong>Throwing</strong><span id="workbookThrowing">Highest specific-prep load</span></span>
+            <span><strong>Strength + power</strong><span id="workbookStrength">Explosive lifting, med-balls</span></span>
+            <span><strong>Note</strong><span id="workbookNote">Long recoveries between throws</span></span>
+          </div>
+        </section>
+
+        <section class="season-outlook plan-view">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">The full season</p>
+              <h2 id="seasonWeekTitle">Week 11 / Specific preparation I</h2>
+            </div>
+            <label class="season-picker">Browse week <input id="seasonWeekRange" type="range" min="1" max="48" value="11" /></label>
+          </div>
+          <div class="season-track"><span id="seasonTrackFill"></span></div>
+          <div class="season-labels"><span>Base</span><span>Strength</span><span>Power</span><span>Pre-comp</span><span>Competition</span><span>Rebuild</span></div>
+          <div class="season-cards">
+            <div><span>Throwing emphasis</span><strong id="seasonThrowing">Highest specific-prep load</strong></div>
+            <div><span>Strength emphasis</span><strong id="seasonStrength">Explosive lifting, med-balls</strong></div>
+            <div><span>Coach's note</span><strong id="seasonNote">Long recoveries between throws</strong></div>
+          </div>
+        </section>
+
+        <section class="methodology-panel coaching-view is-hidden">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">The coaching lens</p>
+              <h2>Train the weak link.</h2>
+            </div>
+            <span class="methodology-source">Public coaching principles</span>
+          </div>
+          <div class="methodology-grid">
+            <div><strong>01 / Diagnose</strong><span>Choose the one limitation that matters most right now.</span></div>
+            <div><strong>02 / Prepare</strong><span>Build the mobility, strength, speed, and control the throw requires.</span></div>
+            <div><strong>03 / Model</strong><span>Use a clear technical position before adding more drills or intensity.</span></div>
+            <div><strong>04 / Practice</strong><span>Match each drill to the bottleneck, then stop before quality fades.</span></div>
+            <div><strong>05 / Review</strong><span>Use notes and video checks to decide the next adjustment.</span></div>
+          </div>
+        </section>
+
+        <section class="content-grid plan-view">
+          <div class="main-column">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Your next session</p>
+                <h2 id="sessionTitle">Friday / Speed + approach</h2>
+              </div>
+              <span class="session-tag" id="sessionTag">Power</span>
+            </div>
+            <article class="session-card" id="sessionCard">
+              <div class="session-card-top">
+                <div>
+                  <span class="session-day" id="sessionDate">Today</span>
+                  <h3 id="sessionHeadline">Fast feet. Long runway.</h3>
+                </div>
+              </div>
+              <p id="sessionDescription">Keep the approach elastic and tall. Today is about feeling speed arrive before the implement does.</p>
+              <div class="exercise-list" id="exerciseList"></div>
+              <button class="primary-button" id="completeButton" type="button"><span>&#10003;</span> Mark session complete</button>
+            </article>
+
+            <div class="section-heading week-heading">
+              <div>
+                <p class="eyebrow">The whole arc</p>
+                <h2>This week</h2>
+              </div>
+              <button class="text-button" id="resetButton" type="button">Reset week</button>
+            </div>
+            <div class="week-strip" id="weekStrip"></div>
+          </div>
+
+          <aside class="side-column">
+            <section class="side-panel focus-panel">
+              <div class="panel-heading"><span class="panel-icon">&#8599;</span><span>Coach's focus</span></div>
+              <p id="focusText">Stay patient through the middle of the approach. The throw starts before the throw.</p>
+              <p class="methodology-tip" id="methodologyTip">Choose one cue and let the rest of the throw organize around it.</p>
+              <div class="focus-rule"></div>
+              <p class="muted small">One cue to carry today</p>
+            </section>
+            <section class="side-panel">
+              <div class="panel-heading"><span class="panel-icon">&#9672;</span><span>Training load</span></div>
+              <div class="load-row"><span id="loadWeekLabel">Week 3 of 4</span><strong id="loadPhaseLabel">Build</strong></div>
+              <div class="load-bar"><span id="loadBarFill"></span></div>
+              <div class="load-labels"><span>Recovery</span><span>Peak</span></div>
+            </section>
+            <section class="side-panel note-panel">
+              <div class="panel-heading"><span class="panel-icon">&#9998;</span><span>Session note</span></div>
+              <textarea id="sessionNote" placeholder="How did it feel today?" rows="4"></textarea>
+              <button class="save-note" id="saveNoteButton" type="button">Save note</button>
+            </section>
+          </aside>
+        </section>
+      </main>
+      <footer><span>Flight Plan</span><span>Train with intent.</span></footer>
+    </div>
+    <script src="app.js?v=2"></script>
+    <script>if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');</script>
+  </body>
+</html>

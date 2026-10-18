@@ -1,0 +1,10 @@
+{
+  "name": "Flight Plan Javelin Trainer",
+  "short_name": "Flight Plan",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0b0b0a",
+  "theme_color": "#0b0b0a",
+  "description": "A season-long javelin training planner.",
+  "icons": []
+}
