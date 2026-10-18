@@ -1,6 +1,9 @@
 const SHEET_NAME = 'Javelin notes';
 
 function doPost(event) {
+  if (!event || !event.postData || !event.postData.contents) {
+    throw new Error('Do not run doPost manually. Deploy the web app and send data from Flight Plan.');
+  }
   const body = JSON.parse(event.postData.contents);
   const sheet = getSheet();
   sheet.appendRow([
@@ -19,6 +22,12 @@ function doPost(event) {
 
 function doGet() {
   return json({ ok: true, service: 'Flight Plan sync' });
+}
+
+function testSheetWrite() {
+  const sheet = getSheet();
+  sheet.appendRow([new Date(), 'test', new Date().toISOString().slice(0, 10), '', 'Test', 'Connection test', '', 'Apps Script is connected.', false]);
+  return json({ ok: true, service: 'Flight Plan sync', test: true });
 }
 
 function getSheet() {
