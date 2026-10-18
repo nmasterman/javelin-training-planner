@@ -184,9 +184,23 @@ function saveWeight(sessionIndex, exerciseName, value) {
 }
 
 function syncRecord(record) {
-  if (!syncEndpoint) return;
-  fetch(syncEndpoint, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ ...record, date: today.toISOString().slice(0, 10), week: trainingWeek }) }).catch(() => {
+  if (!syncEndpoint) return Promise.resolve(false);
+  return fetch(syncEndpoint, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ ...record, date: today.toISOString().slice(0, 10), week: trainingWeek }) }).then(() => true).catch(() => {
     $('syncStatus').textContent = 'Sync failed; saved on this device';
+    return false;
+  });
+}
+
+function testSyncConnection() {
+  if (!syncEndpoint) {
+    $('syncStatus').textContent = 'Paste the /exec URL first';
+    return;
+  }
+  $('syncStatus').textContent = 'Testing connection...';
+  fetch(syncEndpoint, { method: 'GET', mode: 'no-cors', cache: 'no-store' }).then(() => {
+    $('syncStatus').textContent = 'Connected; ready to sync';
+  }).catch(() => {
+    $('syncStatus').textContent = 'Connection failed; check the /exec URL and deployment access';
   });
 }
 
@@ -273,11 +287,12 @@ $('settingsButton').addEventListener('click', () => {
 $('saveSyncButton').addEventListener('click', () => {
   syncEndpoint = $('syncEndpoint').value.trim();
   localStorage.setItem(syncEndpointKey, syncEndpoint);
-  $('syncStatus').textContent = syncEndpoint ? 'Connected locally' : 'Not connected';
+  syncEndpoint ? testSyncConnection() : $('syncStatus').textContent = 'Not connected';
 });
 $('syncNowButton').addEventListener('click', () => {
   if (!syncEndpoint) { $('syncStatus').textContent = 'Add the Apps Script URL first'; return; }
-  syncSavedData();
+  testSyncConnection();
+  window.setTimeout(syncSavedData, 500);
 });
 
 document.querySelectorAll('.view-tab').forEach((tab) => tab.addEventListener('click', () => {
