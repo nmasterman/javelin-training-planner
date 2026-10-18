@@ -48,6 +48,6 @@ The app includes optional sync to a Google Sheet through the included `google-ap
 5. Choose **Web app**, set **Execute as** to yourself, and set access to **Anyone**.
 6. Deploy, authorize the script, and copy the web-app URL.
 7. In Flight Plan, open the **Cloud sync** panel, paste the URL, and choose **Connect Google Sheet**.
-8. Choose **Sync saved data** once to upload existing local weights, notes, and completions.
+8. Choose **Sync this day** to upload the saved weights, note, and completion for the day currently being viewed.
 
-New saves are sent automatically after connection. The sheet creates a `Training Log` tab with timestamps, record type, date, week, day, exercise, weight, note, and completion columns.
+New saves are sent automatically after connection. The manual sync button only uploads the day currently being viewed. The sheet creates a `Training Log` tab with timestamps, record type, date, week, day, exercise, weight, note, and completion columns.

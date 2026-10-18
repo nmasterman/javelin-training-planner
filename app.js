@@ -204,16 +204,18 @@ function testSyncConnection() {
   });
 }
 
-function syncSavedData() {
+function syncSelectedDay() {
   const records = [];
   Object.entries(weightLog).forEach(([key, entries]) => {
     const [sessionIndex, exercise] = key.split(':');
+    if (Number(sessionIndex) !== selectedIndex) return;
     entries.forEach((entry) => records.push({ type: 'weight', date: entry.date.slice(0, 10), week: entry.week, day: plan[Number(sessionIndex)].day, exercise, weight: entry.value }));
   });
-  Object.entries(state.notes).forEach(([sessionIndex, note]) => records.push({ type: 'note', day: plan[Number(sessionIndex)].day, note }));
-  Object.entries(state.completed).forEach(([sessionIndex, completed]) => records.push({ type: 'completion', day: plan[Number(sessionIndex)].day, completed }));
+  const note = state.notes[selectedIndex];
+  if (note) records.push({ type: 'note', day: plan[selectedIndex].day, note });
+  if (state.completed[selectedIndex] !== undefined) records.push({ type: 'completion', day: plan[selectedIndex].day, completed: state.completed[selectedIndex] });
   records.forEach((record) => syncRecord(record));
-  $('syncStatus').textContent = `Sent ${records.length} saved records`;
+  $('syncStatus').textContent = `Sent ${records.length} records for ${plan[selectedIndex].day}`;
 }
 
 function renderSession(index) {
@@ -292,7 +294,7 @@ $('saveSyncButton').addEventListener('click', () => {
 $('syncNowButton').addEventListener('click', () => {
   if (!syncEndpoint) { $('syncStatus').textContent = 'Add the Apps Script URL first'; return; }
   testSyncConnection();
-  window.setTimeout(syncSavedData, 500);
+  window.setTimeout(syncSelectedDay, 500);
 });
 
 document.querySelectorAll('.view-tab').forEach((tab) => tab.addEventListener('click', () => {
