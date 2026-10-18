@@ -192,7 +192,7 @@ function renderSession(index) {
   $('methodologyTip').textContent = methodologyTips[index % methodologyTips.length];
   $('sessionNote').value = state.notes[index] || '';
   $('exerciseList').innerHTML = displayedSession.exercises.map(([name, details]) => {
-    if (session.rest) return `<div class="exercise"><div class="exercise-details"><strong>${name}</strong><span>${details}</span></div></div>`;
+   if (session.rest) return `<div class="exercise"><div class="exercise-details"><strong>${name}</strong><span>${details}</span></div></div>`;
     const current = currentWeightEntry(index, name);
     const previous = previousWeightEntry(index, name);
     const previousLabel = previous ? `Previous: ${previous.value} lb` : 'Previous: none';
