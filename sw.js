@@ -1,4 +1,4 @@
-const CACHE_NAME = 'flight-plan-v2';
+const CACHE_NAME = 'flight-plan-v3';
 const APP_FILES = ['./', './index.html', './styles.css', './app.js', './manifest.webmanifest'];
 
 self.addEventListener('install', (event) => {
