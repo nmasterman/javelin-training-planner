@@ -125,6 +125,8 @@ const weekKey = `flight-plan-${today.getFullYear()}-${today.getMonth()}-${today.
 const state = JSON.parse(localStorage.getItem(weekKey) || '{"completed":{},"notes":{}}');
 const weightStorageKey = 'flight-plan-weight-history';
 const weightLog = JSON.parse(localStorage.getItem(weightStorageKey) || '{}');
+const syncEndpointKey = 'flight-plan-google-sheets-endpoint';
+let syncEndpoint = localStorage.getItem(syncEndpointKey) || '';
 let selectedIndex = Math.min((today.getDay() + 6) % 7, 6);
 
 const $ = (id) => document.getElementById(id);
@@ -134,6 +136,8 @@ $('workbookWeekLabel').textContent = `Week ${trainingWeek} / ${throwingProgressi
 $('workbookThrowing').textContent = throwingProgression.focus;
 $('workbookStrength').textContent = workbookWeek[1];
 $('workbookNote').textContent = throwingProgression.note;
+$('syncEndpoint').value = syncEndpoint;
+$('syncStatus').textContent = syncEndpoint ? 'Connected locally' : 'Not connected';
 
 function renderSeasonOutlook(weekNumber) {
   const seasonWeek = seasonOutlook[weekNumber - 1];
@@ -176,6 +180,26 @@ function saveWeight(sessionIndex, exerciseName, value) {
   if (value !== '') entries.push({ week: trainingWeek, value, date: new Date().toISOString() });
   weightLog[key] = entries;
   localStorage.setItem(weightStorageKey, JSON.stringify(weightLog));
+  syncRecord({ type: 'weight', day: plan[sessionIndex].day, exercise: exerciseName, weight: value });
+}
+
+function syncRecord(record) {
+  if (!syncEndpoint) return;
+  fetch(syncEndpoint, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ ...record, date: today.toISOString().slice(0, 10), week: trainingWeek }) }).catch(() => {
+    $('syncStatus').textContent = 'Sync failed; saved on this device';
+  });
+}
+
+function syncSavedData() {
+  const records = [];
+  Object.entries(weightLog).forEach(([key, entries]) => {
+    const [sessionIndex, exercise] = key.split(':');
+    entries.forEach((entry) => records.push({ type: 'weight', date: entry.date.slice(0, 10), week: entry.week, day: plan[Number(sessionIndex)].day, exercise, weight: entry.value }));
+  });
+  Object.entries(state.notes).forEach(([sessionIndex, note]) => records.push({ type: 'note', day: plan[Number(sessionIndex)].day, note }));
+  Object.entries(state.completed).forEach(([sessionIndex, completed]) => records.push({ type: 'completion', day: plan[Number(sessionIndex)].day, completed }));
+  records.forEach((record) => syncRecord(record));
+  $('syncStatus').textContent = `Sent ${records.length} saved records`;
 }
 
 function renderSession(index) {
@@ -228,10 +252,12 @@ $('completeButton').addEventListener('click', () => {
   saveState();
   renderWeek();
   renderSession(selectedIndex);
+  syncRecord({ type: 'completion', day: plan[selectedIndex].day, completed: state.completed[selectedIndex] });
 });
 $('saveNoteButton').addEventListener('click', () => {
   state.notes[selectedIndex] = $('sessionNote').value;
   saveState();
+  syncRecord({ type: 'note', day: plan[selectedIndex].day, note: state.notes[selectedIndex] });
   $('saveNoteButton').textContent = 'Saved';
   window.setTimeout(() => { $('saveNoteButton').textContent = 'Save note'; }, 1200);
 });
@@ -243,6 +269,15 @@ $('resetButton').addEventListener('click', () => {
 });
 $('settingsButton').addEventListener('click', () => {
   window.alert('Settings will let you adjust your phase, throwing hand, and weekly availability in the next version.');
+});
+$('saveSyncButton').addEventListener('click', () => {
+  syncEndpoint = $('syncEndpoint').value.trim();
+  localStorage.setItem(syncEndpointKey, syncEndpoint);
+  $('syncStatus').textContent = syncEndpoint ? 'Connected locally' : 'Not connected';
+});
+$('syncNowButton').addEventListener('click', () => {
+  if (!syncEndpoint) { $('syncStatus').textContent = 'Add the Apps Script URL first'; return; }
+  syncSavedData();
 });
 
 document.querySelectorAll('.view-tab').forEach((tab) => tab.addEventListener('click', () => {

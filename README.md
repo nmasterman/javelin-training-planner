@@ -36,3 +36,18 @@ GitHub Pages is configured under **Settings -> Pages -> Deploy from a branch**.
 ## Data Storage
 
 Weights, notes, and completed sessions are saved in browser `localStorage` on each device. They currently do not sync between your computer and phone. Clearing browser data can remove locally saved training history.
+
+## Google Sheets Sync
+
+The app includes optional sync to a Google Sheet through the included `google-apps-script.gs` file.
+
+1. Create a new Google Sheet.
+2. Open **Extensions -> Apps Script**.
+3. Replace the starter code with the contents of `google-apps-script.gs`.
+4. Click **Deploy -> New deployment**.
+5. Choose **Web app**, set **Execute as** to yourself, and set access to **Anyone**.
+6. Deploy, authorize the script, and copy the web-app URL.
+7. In Flight Plan, open the **Cloud sync** panel, paste the URL, and choose **Connect Google Sheet**.
+8. Choose **Sync saved data** once to upload existing local weights, notes, and completions.
+
+New saves are sent automatically after connection. The sheet creates a `Training Log` tab with timestamps, record type, date, week, day, exercise, weight, note, and completion columns.

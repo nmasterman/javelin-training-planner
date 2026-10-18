@@ -142,6 +142,13 @@
               <textarea id="sessionNote" placeholder="How did it feel today?" rows="4"></textarea>
               <button class="save-note" id="saveNoteButton" type="button">Save note</button>
             </section>
+            <section class="side-panel sync-panel">
+              <div class="panel-heading"><span class="panel-icon">&#8595;</span><span>Cloud sync</span></div>
+              <p class="sync-status" id="syncStatus">Not connected</p>
+              <input class="sync-input" id="syncEndpoint" type="url" placeholder="Paste Google Apps Script URL" aria-label="Google Apps Script URL" />
+              <button class="save-note" id="saveSyncButton" type="button">Connect Google Sheet</button>
+              <button class="sync-action" id="syncNowButton" type="button">Sync saved data</button>
+            </section>
           </aside>
         </section>
       </main>
