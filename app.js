@@ -121,8 +121,9 @@ const throwingProgression = trainingWeek <= 12
         saturday: [['Warm-up sequence', '15 min'], ['Run-throughs', '4 throws'], ['Competition throws', '6 throws'], ['Cooldown', '10 min']]
       };
 
-const weekKey = `flight-plan-${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`;
-const state = JSON.parse(localStorage.getItem(weekKey) || '{"completed":{},"notes":{}}');
+const weekKey = `flight-plan-week-${trainingWeek}`;
+const legacyDayKey = `flight-plan-${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`;
+const state = JSON.parse(localStorage.getItem(weekKey) || localStorage.getItem(legacyDayKey) || '{"completed":{},"notes":{}}');
 const weightStorageKey = 'flight-plan-weight-history';
 const weightLog = JSON.parse(localStorage.getItem(weightStorageKey) || '{}');
 const syncEndpointKey = 'flight-plan-google-sheets-endpoint';
