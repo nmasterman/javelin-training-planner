@@ -61,22 +61,26 @@ const seasonBlocks = [
   ['Second peak / transition', 'Final quality, then full deload and assessment', 'Leave freshness in reserve for the next cycle.']
 ];
 const phaseLiftTemplates = [
-  ['Hang power clean 5x3; front squat 4x5; split squat 3x6/side; RDL 3x6', 'Push press 5x3; pull-up 4x5; chest-supported row 3x8; band ER 2x15', 'Cossack squat 3x6/side; Copenhagen plank 3x20s/side; sled drag 4x20m'],
-  ['Power clean 5x2; trap bar deadlift 5x3; RFESS 3x5/side; RDL 3x5', 'Push press 5x3; weighted pull-up 4x4; 1-arm row 3x6/side; face pull 2x15', 'Step-up 3x5/side; adductor slide lunge 3x6/side; anti-rotation press 3x10/side; calf iso 3x20s'],
-  ['Clean pull 5x3; front squat 5x3; RFESS 3x5/side; Nordic eccentric 3x4', 'Push jerk 4x2; high pull 4x3; pull-up 4x4; chest-supported row 3x6', 'Pogo hops 3x20; step-up jump 3x3/side; Pallof press 3x8/side; sled drag 3x15m'],
-  ['Hang power clean 5x2; trap bar jump 5x3; dynamic front squat 5x2; RFESS 3x4/side', 'Push jerk 5x2; high pull 4x3; weighted pull-up 4x3; row 3x6', 'Bounds 3x20m; hip airplane 3x4/side; Pallof press 3x8/side; sled drag 3x20m'],
-  ['Power clean 4x2; front squat 4x2; RFESS 2x4/side; RDL 2x4', 'Push press 4x2; weighted pull-up 3x3; chest-supported row 3x5; band ER 2x12', 'Copenhagen plank 2x20s/side; Pallof press 2x8/side; sled drag 3x15m; mobility finish'],
-  ['Power clean 3x2; front squat 3x2; split squat 2x3/side; RDL 2x3', 'Push press 3x2; pull-up 3x3; row 2x5; band ER 2x12', 'Mobility, trunk, hips, adductors, and easy carries'],
-  ['Power clean 3x2; trap bar jump 3x2; front squat 3x2; split squat 2x3/side', 'Push press 3x2; pull-up 3x3; row 2x5; band ER 2x12', 'Pogo 2x15; dead bug 2x8; side plank 2x20s/side; light carries'],
-  ['Power clean 2x2; front squat 2x2; split squat 2x3/side; RDL 2x3', 'Push press 2x2; pull-up 2x3; row 2x5; band ER 2x12', 'Recovery only: mobility, trunk, hips, adductors, and easy carries']
+  ['Hang power clean 4x3 @60-70%; front squat 4x6 @RPE 7; split squat 3x8/side; RDL 3x8', 'Push press 4x5 @RPE 7; pull-up 4x6; chest-supported row 3x10; band ER 3x15', 'Cossack squat 3x8/side; Copenhagen plank 3x20s/side; sled drag 4x20m'],
+  ['Power clean 5x2 @70-75%; trap bar deadlift 5x4 @RPE 8; RFESS 4x5/side; RDL 3x5', 'Push press 5x3; weighted pull-up 4x4; 1-arm row 4x6/side; face pull 3x12', 'Step-up 3x6/side; adductor slide lunge 3x6/side; anti-rotation press 3x10/side; calf iso 3x20s'],
+  ['Hang power clean 5x2 @70-80%; trap bar jump 5x3; dynamic front squat 5x2 @55-65%; RFESS 3x4/side', 'Push jerk 5x2; high pull 4x3; weighted pull-up 4x4; chest-supported row 3x6', 'Pogo hops 3x20; step-up jump 3x3/side; Pallof press 3x8/side; sled drag 3x15m'],
+  ['Power clean 4x2 @75-80%; front squat 4x2 @RPE 8; RFESS 3x4/side; RDL 3x4', 'Push jerk 4x2; high pull 4x3; weighted pull-up 4x3; row 3x5', 'Bounds 3x20m; hip airplane 3x4/side; Pallof press 3x8/side; sled drag 3x20m'],
+  ['Power clean 5x2 @75-85%; trap bar deadlift 5x2 @RPE 8-9; front squat 4x3; Nordic 3x4', 'Push press 5x2; weighted pull-up 5x3; row 4x5; band ER 2x12', 'Split squat iso 3x20s/side; hip airplane 3x4/side; Pallof press 3x8/side; sled drag 4x20m'],
+  ['Power clean 4x2 @70-80%; front squat 4x2 @RPE 7; RFESS 3x4/side; RDL 3x4', 'Push jerk 4x2; high pull 4x3; pull-up 4x3; row 3x5', 'Step-up jump 3x3/side; anti-rotation press 3x8/side; hip airplane 2x4/side; sled drag 3x20m'],
+  ['Power clean 4x2 @60-70%; trap bar jump 4x3; dynamic front squat 4x2 @50-60%; split squat 2x4/side', 'Push press 4x2; high pull 3x3; pull-up 3x3; row 2x5', 'Pogo 3x15; bounds 3x20m; dead bug 2x8; light carries'],
+  ['Power clean 3x2 @60-70%; trap bar jump 3x3; dynamic front squat 3x2 @50-60%; RFESS 2x4/side', 'Push press 3x2; pull-up 3x3; row 2x5; band ER 2x12', 'Step-up jump 2x3/side; Pallof press 2x8/side; mobility finish'],
+  ['Power clean 3x2 @60-70%; front squat 3x2 @RPE 6-7; split squat 2x3/side; RDL 2x4', 'Push press 3x2; pull-up 3x3; row 2x5; band ER 2x12', 'Copenhagen plank 2x20s/side; Pallof press 2x8/side; sled drag 3x15m; mobility'],
+  ['Power clean 2x2 @60%; front squat 2x2 @RPE 6; split squat 2x3/side; RDL 2x3', 'Push press 2x2; pull-up 2x3; row 2x5; band ER 2x12', 'Recovery only: mobility, trunk, hips, adductors, and easy carries'],
+  ['Hang power clean 4x3 @60-70%; front squat 4x5 @RPE 7; split squat 3x6/side; RDL 3x6', 'Push press 4x3; pull-up 4x5; chest-supported row 3x8; band ER 2x15', 'Cossack squat 3x6/side; Copenhagen plank 3x20s/side; sled drag 4x20m'],
+  ['Power clean 3x2 @70-80%; front squat 3x2 @RPE 7; RFESS 2x4/side; RDL 2x4', 'Push press 3x2; pull-up 3x3; row 2x5; band ER 2x12', 'Pogo 2x15; dead bug 2x8; side plank 2x20s/side; light carries']
 ];
 function buildLiftPlan(weekNumber) {
   if (workbookLifts[weekNumber]) return workbookLifts[weekNumber];
   const blockIndex = Math.floor((weekNumber - 1) / 4);
   const weekInBlock = ((weekNumber - 1) % 4) + 1;
-  const templateIndex = Math.min(phaseLiftTemplates.length - 1, Math.floor(blockIndex / 1));
+  const templateIndex = Math.min(phaseLiftTemplates.length - 1, blockIndex);
   const template = phaseLiftTemplates[templateIndex];
-  if (weekInBlock === 4) return { lower: template[0].replace(/\d+x\d+/g, '2x2'), upper: template[1].replace(/\d+x\d+/g, '2x2'), recovery: template[2] + '; deload and restore' };
+  if (weekInBlock === 4) return { lower: template[0].replace(/\d+x\d+/g, '2x2').replace(/@RPE \d(?:\.\d)?/g, '@RPE 6'), upper: template[1].replace(/\d+x\d+/g, '2x2'), recovery: template[2] + '; deload and restore' };
   return { lower: template[0], upper: template[1], recovery: template[2] };
 }
 const seasonLifts = Object.fromEntries(Array.from({ length: 48 }, (_, index) => {
