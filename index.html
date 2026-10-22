@@ -27,6 +27,7 @@
       <nav class="view-tabs" aria-label="Planner views">
         <button class="view-tab active" type="button" data-view="plan" aria-selected="true">Training plan</button>
         <button class="view-tab" type="button" data-view="coaching" aria-selected="false">Coaching lens</button>
+        <button class="view-tab" type="button" data-view="lifting" aria-selected="false">Lifting plan</button>
       </nav>
 
       <main>
@@ -89,6 +90,22 @@
             <div><strong>03 / Model</strong><span>Use a clear technical position before adding more drills or intensity.</span></div>
             <div><strong>04 / Practice</strong><span>Match each drill to the bottleneck, then stop before quality fades.</span></div>
             <div><strong>05 / Review</strong><span>Use notes and video checks to decide the next adjustment.</span></div>
+          </div>
+        </section>
+
+        <section class="lifting-view is-hidden">
+          <div class="lifting-header">
+            <div>
+              <p class="eyebrow">Strength progression</p>
+              <h2 id="liftingWeekTitle">Week 12 / Lifting plan</h2>
+              <p class="lifting-subtitle" id="liftingWeekNote">Choose a week to see its lower, upper, and recovery sessions.</p>
+            </div>
+            <label class="lifting-picker">View week <select id="liftingWeekSelect" aria-label="Choose lifting week"></select></label>
+          </div>
+          <div class="lifting-grid">
+            <article class="lift-card"><span class="lift-day">Tuesday / Lower + Olympic</span><h3>Build force</h3><p id="liftingLower"></p></article>
+            <article class="lift-card"><span class="lift-day">Thursday / Upper + Olympic</span><h3>Transfer force</h3><p id="liftingUpper"></p></article>
+            <article class="lift-card"><span class="lift-day">Friday / Recovery + trunk</span><h3>Stay available</h3><p id="liftingRecovery"></p></article>
           </div>
         </section>
 

@@ -160,6 +160,16 @@ function renderTrainingLoad() {
   $('loadBarFill').style.width = `${(weekInBlock / 4) * 100}%`;
 }
 
+function renderLiftingWeek(weekNumber) {
+  const lift = seasonLifts[weekNumber];
+  const block = seasonBlocks[Math.floor((weekNumber - 1) / 4)];
+  $('liftingWeekTitle').textContent = `Week ${weekNumber} / ${block[0]}`;
+  $('liftingWeekNote').textContent = `${block[2]} Week ${((weekNumber - 1) % 4) + 1} of 4.`;
+  $('liftingLower').textContent = lift.lower;
+  $('liftingUpper').textContent = lift.upper;
+  $('liftingRecovery').textContent = lift.recovery;
+}
+
 function saveState() {
   localStorage.setItem(weekKey, JSON.stringify(state));
 }
@@ -304,13 +314,15 @@ $('syncNowButton').addEventListener('click', () => {
 
 document.querySelectorAll('.view-tab').forEach((tab) => tab.addEventListener('click', () => {
   const coaching = tab.dataset.view === 'coaching';
+  const lifting = tab.dataset.view === 'lifting';
   document.querySelectorAll('.view-tab').forEach((item) => {
     const active = item === tab;
     item.classList.toggle('active', active);
     item.setAttribute('aria-selected', String(active));
   });
-  document.querySelectorAll('.plan-view').forEach((view) => view.classList.toggle('is-hidden', coaching));
+  document.querySelectorAll('.plan-view').forEach((view) => view.classList.toggle('is-hidden', coaching || lifting));
   document.querySelector('.coaching-view').classList.toggle('is-hidden', !coaching);
+  document.querySelector('.lifting-view').classList.toggle('is-hidden', !lifting);
 }));
 
 renderWeek();
@@ -319,3 +331,7 @@ renderSeasonOutlook(trainingWeek);
 renderTrainingLoad();
 $('seasonWeekRange').value = trainingWeek;
 $('seasonWeekRange').addEventListener('input', (event) => renderSeasonOutlook(Number(event.target.value)));
+for (let weekNumber = 1; weekNumber <= 48; weekNumber += 1) $('liftingWeekSelect').insertAdjacentHTML('beforeend', `<option value="${weekNumber}">Week ${weekNumber}</option>`);
+$('liftingWeekSelect').value = trainingWeek;
+$('liftingWeekSelect').addEventListener('change', (event) => renderLiftingWeek(Number(event.target.value)));
+renderLiftingWeek(trainingWeek);
