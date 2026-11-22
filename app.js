@@ -192,29 +192,36 @@ function renderLiftingWeek(weekNumber) {
   $('liftingRecovery').textContent = lift.recovery;
 }
 
+function splitPrescription(prescription) {
+  return prescription.split('; ').map((exercise) => {
+    const match = exercise.match(/^(.+?)\s+(\d+\s*x.+)$/);
+    return match ? [match[1], match[2]] : [exercise, ''];
+  });
+}
+
 function saveState() {
   localStorage.setItem(weekKey, JSON.stringify(state));
 }
 
-function weightKey(sessionIndex, exerciseName) {
-  return `${sessionIndex}:${exerciseName}`;
+function weightKey(sessionIndex, exerciseName, setNumber) {
+  return `${sessionIndex}:${exerciseName}:${setNumber}`;
 }
 
-function currentWeightEntry(sessionIndex, exerciseName) {
-  const entries = weightLog[weightKey(sessionIndex, exerciseName)] || [];
+function currentWeightEntry(sessionIndex, exerciseName, setNumber) {
+  const entries = weightLog[weightKey(sessionIndex, exerciseName, setNumber)] || (setNumber === 1 ? weightLog[`${sessionIndex}:${exerciseName}`] || [] : []);
   return entries.filter((entry) => entry.week === trainingWeek).sort((a, b) => b.date.localeCompare(a.date))[0];
 }
 
-function previousWeightEntry(sessionIndex, exerciseName) {
-  const entries = weightLog[weightKey(sessionIndex, exerciseName)] || [];
-  const current = currentWeightEntry(sessionIndex, exerciseName);
+function previousWeightEntry(sessionIndex, exerciseName, setNumber) {
+  const entries = weightLog[weightKey(sessionIndex, exerciseName, setNumber)] || (setNumber === 1 ? weightLog[`${sessionIndex}:${exerciseName}`] || [] : []);
+  const current = currentWeightEntry(sessionIndex, exerciseName, setNumber);
   return entries.filter((entry) => entry !== current).sort((a, b) => b.date.localeCompare(a.date))[0];
 }
 
-function saveWeight(sessionIndex, exerciseName, value) {
-  const key = weightKey(sessionIndex, exerciseName);
+function saveWeight(sessionIndex, exerciseName, setNumber, value) {
+  const key = weightKey(sessionIndex, exerciseName, setNumber);
   const entries = weightLog[key] || [];
-  if (value !== '') entries.push({ week: trainingWeek, value, date: new Date().toISOString() });
+  if (value !== '') entries.push({ week: trainingWeek, set: setNumber, value, date: new Date().toISOString() });
   weightLog[key] = entries;
   localStorage.setItem(weightStorageKey, JSON.stringify(weightLog));
   syncRecord({ type: 'weight', day: plan[sessionIndex].day, exercise: exerciseName, weight: value });
@@ -244,9 +251,9 @@ function testSyncConnection() {
 function syncSelectedDay() {
   const records = [];
   Object.entries(weightLog).forEach(([key, entries]) => {
-    const [sessionIndex, exercise] = key.split(':');
+    const [sessionIndex, exercise, setNumber] = key.split(':');
     if (Number(sessionIndex) !== selectedIndex) return;
-    entries.forEach((entry) => records.push({ type: 'weight', date: entry.date.slice(0, 10), week: entry.week, day: plan[Number(sessionIndex)].day, exercise, weight: entry.value }));
+    entries.forEach((entry) => records.push({ type: 'weight', date: entry.date.slice(0, 10), week: entry.week, day: plan[Number(sessionIndex)].day, exercise, set: entry.set || Number(setNumber) || 1, weight: entry.value }));
   });
   const note = state.notes[selectedIndex];
   if (note) records.push({ type: 'note', day: plan[selectedIndex].day, note });
@@ -258,7 +265,7 @@ function syncSelectedDay() {
 function renderSession(index) {
   selectedIndex = index;
   const session = plan[index];
-  const workbookSession = index === 0 ? { title: 'Throwing / ' + throwingProgression.phase, headline: 'Build the engine before the spear.', description: `${throwingProgression.focus}. ${throwingProgression.note}`, focus: throwingProgression.note, exercises: throwingProgression.primary } : index === 1 ? { title: 'Lift 1 / lower + Olympic', headline: 'Power before strength.', description: weekLift.lower, focus: workbookWeek[1], exercises: weekLift.lower.split('; ').map((exercise) => [exercise, '']) } : index === 3 ? { title: 'Plyos + Lift 2 / upper', headline: 'Fast through the ground.', description: weekLift.upper, focus: workbookWeek[1], exercises: weekLift.upper.split('; ').map((exercise) => [exercise, '']) } : index === 4 ? { title: 'Lift 3 / recovery', headline: 'Keep the system fresh.', description: weekLift.recovery, focus: workbookWeek[2], exercises: weekLift.recovery.split('; ').map((exercise) => [exercise, '']) } : index === 5 ? { title: 'Ball throws / volume', headline: 'Repeat strong shapes.', description: throwingProgression.note, focus: throwingProgression.focus, exercises: throwingProgression.saturday } : null;
+  const workbookSession = index === 0 ? { title: 'Throwing / ' + throwingProgression.phase, headline: 'Build the engine before the spear.', description: `${throwingProgression.focus}. ${throwingProgression.note}`, focus: throwingProgression.note, exercises: throwingProgression.primary } : index === 1 ? { title: 'Lift 1 / lower + Olympic', headline: 'Power before strength.', description: weekLift.lower, focus: workbookWeek[1], exercises: splitPrescription(weekLift.lower) } : index === 3 ? { title: 'Plyos + Lift 2 / upper', headline: 'Fast through the ground.', description: weekLift.upper, focus: workbookWeek[1], exercises: splitPrescription(weekLift.upper) } : index === 4 ? { title: 'Lift 3 / recovery', headline: 'Keep the system fresh.', description: weekLift.recovery, focus: workbookWeek[2], exercises: splitPrescription(weekLift.recovery) } : index === 5 ? { title: 'Ball throws / volume', headline: 'Repeat strong shapes.', description: throwingProgression.note, focus: throwingProgression.focus, exercises: throwingProgression.saturday } : null;
   const displayedSession = workbookSession ? { ...session, ...workbookSession } : session;
   $('sessionTitle').textContent = `${session.day} / ${displayedSession.title}`;
   $('sessionTag').textContent = session.tag;
@@ -270,13 +277,19 @@ function renderSession(index) {
   $('sessionNote').value = state.notes[index] || '';
   $('exerciseList').innerHTML = displayedSession.exercises.map(([name, details]) => {
    if (session.rest) return `<div class="exercise"><div class="exercise-details"><strong>${name}</strong><span>${details}</span></div></div>`;
-    const current = currentWeightEntry(index, name);
-    const previous = previousWeightEntry(index, name);
-    const previousLabel = previous ? `Previous: ${previous.value} lb` : 'Previous: none';
-    return `<div class="exercise"><div class="exercise-details"><strong>${name}</strong><span>${details}</span><span class="previous-weight">${previousLabel}</span></div><label class="weight-entry"><input class="weight-input" type="number" min="0" step="0.5" inputmode="decimal" placeholder="lb" aria-label="Weight for ${name}" data-session="${index}" data-exercise="${name}" value="${current ? current.value : ''}"><span class="weight-unit">lb</span></label></div>`;
+    const setMatch = String(details).match(/^(\d+)\s*x/);
+    const setCount = setMatch ? Number(setMatch[1]) : 0;
+    const setInputs = Array.from({ length: setCount }, (_, setIndex) => {
+      const setNumber = setIndex + 1;
+      const current = currentWeightEntry(index, name, setNumber);
+      const previous = previousWeightEntry(index, name, setNumber);
+      const previousLabel = previous ? `Prev ${previous.value}` : '';
+      return `<label class="set-entry"><span>Set ${setNumber}</span><input class="weight-input" type="number" min="0" step="0.5" inputmode="decimal" placeholder="lb" aria-label="${name}, set ${setNumber} weight" data-session="${index}" data-exercise="${name}" data-set="${setNumber}" value="${current ? current.value : ''}"><small>${previousLabel}</small></label>`;
+    }).join('');
+    return `<div class="exercise"><div class="exercise-details"><strong>${name}</strong><span>${details}</span></div>${setInputs ? `<div class="set-inputs">${setInputs}</div>` : ''}</div>`;
   }).join('');
   document.querySelectorAll('.weight-input').forEach((input) => input.addEventListener('change', () => {
-    saveWeight(Number(input.dataset.session), input.dataset.exercise, input.value);
+    saveWeight(Number(input.dataset.session), input.dataset.exercise, Number(input.dataset.set), input.value);
     renderSession(selectedIndex);
   }));
   const isDone = Boolean(state.completed[index]);
