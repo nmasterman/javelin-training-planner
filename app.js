@@ -83,7 +83,10 @@ function buildLiftPlan(weekNumber) {
   const weekInBlock = ((weekNumber - 1) % 4) + 1;
   const templateIndex = Math.min(phaseLiftTemplates.length - 1, blockIndex);
   const template = phaseLiftTemplates[templateIndex];
-  if (weekInBlock === 4) return { lower: template[0].replace(/\d+x\d+/g, '2x2').replace(/@RPE \d(?:\.\d)?/g, '@RPE 6'), upper: template[1].replace(/\d+x\d+/g, '2x2'), recovery: template[2] + '; deload and restore' };
+  if (weekInBlock === 4) {
+    const reduceSets = (prescription) => prescription.replace(/(\d+)x/g, (_, sets) => `${Math.max(1, Number(sets) - 1)}x`).replace(/@RPE \d(?:\.\d)?/g, '@RPE 6');
+    return { lower: reduceSets(template[0]), upper: reduceSets(template[1]), recovery: reduceSets(template[2]) + '; deload and restore' };
+  }
   return { lower: template[0], upper: template[1], recovery: template[2] };
 }
 const seasonLifts = Object.fromEntries(Array.from({ length: 48 }, (_, index) => {
