@@ -31,12 +31,12 @@ const workbookWeeks = [
 ];
 const workbookLifts = {
   11: {
-    lower: 'Hang power clean 6x2; trap bar jump 6x2; front squat 3x2 @RPE 7; RFESS 2x4/side; Nordic 2x3',
+    lower: 'Hang power clean 6x2; dumbbell jump shrug 6x2; front squat 3x2 @RPE 7; RFESS 2x4/side; Nordic 2x3',
     upper: 'Push jerk 4x2; high pull from hang 5x2-3; pull-up 4x3; row 3x5; band ER 2x12',
     recovery: 'Step-up jump 3x3/side; anti-rotation press 3x8/side; hip airplane 2x4/side; sled drag 3x20m'
   },
   12: {
-    lower: 'Hang power clean 3x2; trap bar jump 3x2; front squat 3x2 @RPE 6; split squat 2x3/side; RDL 2x4',
+    lower: 'Hang power clean 3x2; dumbbell jump shrug 3x2; front squat 3x2 @RPE 6; split squat 2x3/side; RDL 2x4',
     upper: 'Push press 3x2; pull-up 3x3; row 2x5; band ER 2x12',
     recovery: 'Easy plyo and trunk: pogo 2x15; dead bug 2x8; side plank 2x20s/side; light carries'
   },
@@ -65,14 +65,14 @@ const seasonBlocks = [
 ];
 const phaseLiftTemplates = [
   ['Hang power clean 4x3 @60-70%; 2-sec paused front squat 4x6 @RPE 7; split squat 3x8/side; 3-sec eccentric RDL 3x8', 'Push press 4x5 @RPE 7; pull-up 4x6; chest-supported row 3x10; band ER 3x15', 'Cossack squat 3x8/side; Copenhagen plank 3x20s/side; sled drag 4x20m'],
-  ['Power clean 5x2 @70-75%; trap bar deadlift 5x4 @RPE 8; front-foot elevated split squat 4x5/side; 2-sec pause RDL 3x5', 'Push press 5x3; weighted pull-up 4x4; 1-arm row 4x6/side; face pull 3x12', 'Step-up 3x6/side; adductor slide lunge 3x6/side; anti-rotation press 3x10/side; calf iso 3x20s'],
-  ['Hang power clean 5x2 @70-80%; trap bar jump 5x3; 2-sec paused dynamic front squat 5x2 @55-65%; RFESS 3x4/side', 'Push jerk 5x2; high pull 4x3; weighted pull-up 4x4; chest-supported row 3x6', 'Pogo hops 3x20; step-up jump 3x3/side; Pallof press 3x8/side; sled drag 3x15m'],
+  ['Power clean 5x2 @70-75%; barbell deadlift 5x4 @RPE 8; front-foot elevated split squat 4x5/side; 2-sec pause RDL 3x5', 'Push press 5x3; weighted pull-up 4x4; 1-arm row 4x6/side; face pull 3x12', 'Step-up 3x6/side; adductor slide lunge 3x6/side; anti-rotation press 3x10/side; calf iso 3x20s'],
+  ['Hang power clean 5x2 @70-80%; dumbbell jump shrug 5x3; 2-sec paused dynamic front squat 5x2 @55-65%; RFESS 3x4/side', 'Push jerk 5x2; high pull 4x3; weighted pull-up 4x4; chest-supported row 3x6', 'Pogo hops 3x20; step-up jump 3x3/side; Pallof press 3x8/side; sled drag 3x15m'],
   ['Power clean from blocks 4x2 @75-80%; 3-sec eccentric front squat 4x2 @RPE 8; RFESS 3x4/side; single-leg RDL 3x4/side', 'Push jerk 4x2; high pull 4x3; weighted pull-up 4x3; 1-arm cable row 3x5/side', 'Bounds 3x20m; hip airplane 3x4/side; Pallof press 3x8/side; sled drag 3x20m'],
-  ['Power clean 5x3 @70%; 2-sec paused trap bar deadlift 5x5 @RPE 7; front squat 4x6; reverse lunge 3x8/side', 'Push press 5x5; pull-up 4x6; seal row 4x8; band ER 3x15', 'Med-ball scoop toss 5x6/side; Copenhagen plank 3x25s/side; sled drag 4x20m'],
+  ['Power clean 5x3 @70%; 2-sec paused barbell deadlift 5x5 @RPE 7; front squat 4x6; reverse lunge 3x8/side', 'Push press 5x5; pull-up 4x6; seal row 4x8; band ER 3x15', 'Med-ball scoop toss 5x6/side; Copenhagen plank 3x25s/side; sled drag 4x20m'],
   ['Power clean 5x3 @70-75%; 3-sec eccentric front squat 5x5 @RPE 7-8; snatch-grip RDL 4x6; lateral lunge 3x8/side', 'Push press 5x4; weighted pull-up 4x5; half-kneeling 1-arm row 4x8/side; face pull 3x15', 'Rotational shot throw 5x5/side; step-up 3x8/side; Pallof press 3x10/side'],
-  ['Hang high pull 4x3 @75%; trap bar deadlift 5x4 @RPE 8; 2-sec paused front squat 4x5; Nordic 3x5', 'Push press 4x4; weighted pull-up 4x4; Meadows row 4x6/side; band ER 3x12', 'Overhead backward throw 5x5; split-stance punch throw 4x5/side; sled drag 4x20m'],
+  ['Hang high pull 4x3 @75%; barbell deadlift 5x4 @RPE 8; 2-sec paused front squat 4x5; Nordic 3x5', 'Push press 4x4; weighted pull-up 4x4; Meadows row 4x6/side; band ER 3x12', 'Overhead backward throw 5x5; split-stance punch throw 4x5/side; sled drag 4x20m'],
   ['Power clean 4x2 @70-80%; jump squat 4x4 @20-30%; front squat 4x4 @RPE 8; rear-foot elevated split squat 3x6/side', 'Push jerk 4x3; high pull 4x3; pull-up 4x4; chest-supported row 3x6', 'Med-ball scoop toss 4x5/side; bounds 4x20m; acceleration 6x20m'],
-  ['Hang power clean 4x2 @60-70%; trap bar jump 4x3; 2-sec pause squat 4x2 @50-60%; step-up 3x4/side', 'Push press 4x2; high pull 4x3; pull-up 3x3; 1-arm row 3x5/side', 'Pogo 4x15; step-behind throw 4x4/side; accelerations 6x30m'],
+  ['Hang power clean 4x2 @60-70%; dumbbell jump shrug 4x3; 2-sec pause squat 4x2 @50-60%; step-up 3x4/side', 'Push press 4x2; high pull 4x3; pull-up 3x3; 1-arm row 3x5/side', 'Pogo 4x15; step-behind throw 4x4/side; accelerations 6x30m'],
   ['Power clean 2x2 @60%; front squat 2x2 @RPE 6; split squat 2x3/side; RDL 2x3', 'Push press 2x2; pull-up 2x3; row 2x5; band ER 2x12', 'Recovery only: mobility, trunk, hips, adductors, and easy carries'],
   ['Hang power clean 4x3 @60-70%; front squat 4x5 @RPE 7; split squat 3x6/side; RDL 3x6', 'Push press 4x3; pull-up 4x5; chest-supported row 3x8; band ER 2x15', 'Cossack squat 3x6/side; Copenhagen plank 3x20s/side; sled drag 4x20m'],
   ['Power clean 3x2 @70-80%; front squat 3x2 @RPE 7; RFESS 2x4/side; RDL 2x4', 'Push press 3x2; pull-up 3x3; row 2x5; band ER 2x12', 'Pogo 2x15; dead bug 2x8; side plank 2x20s/side; light carries']
