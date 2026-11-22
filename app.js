@@ -165,6 +165,30 @@ const plyoProgression = trainingWeek <= 17
         exercises: [['Backward overhead shot', '8 throws @ 8 kg'], ['Reactive broad jump', '3 x 4'], ['Single-leg bound to jump', '3 x 4 / side'], ['Hurdle-free pogo series', '3 x 5'], ['Depth drop + jump', '3 x 4'], ['Skater bound + vertical jump', '3 x 4 / side']]
       };
 
+  const sprintProgression = trainingWeek <= 17
+    ? {
+        title: 'Speed / acceleration foundation',
+        headline: 'Fast, fresh, and finished early.',
+        description: 'Replace long sprint conditioning with full-recovery speed work. Stop every rep before mechanics or posture fade so Tuesday throwing stays high quality.',
+        focus: 'Push hard for the first steps, rise gradually, and leave the track feeling sharper than when you arrived.',
+        exercises: [['Sprint mechanics', 'A-skip + dribbles, 2 rounds'], ['Acceleration', '6 x 20m, full recovery'], ['Acceleration', '4 x 30m, full recovery'], ['Flying sprint', '3 x 10m, 20m build-in'], ['Easy mobility', '8-10 min']]
+      }
+    : trainingWeek <= 30
+      ? {
+          title: 'Speed / acceleration + flys',
+          headline: 'Build speed without borrowing from tomorrow.',
+          description: 'Keep total sprint volume moderate and recover completely. The goal is faster mechanics, not a second conditioning workout.',
+          focus: 'Relax at speed. Fast shoulders and quiet contacts are the target.',
+          exercises: [['Sprint mechanics', 'A-skip + dribbles, 2 rounds'], ['Acceleration', '4 x 20m, full recovery'], ['Acceleration', '4 x 30m, full recovery'], ['Flying sprint', '4 x 20m, 25m build-in'], ['Easy mobility', '8-10 min']]
+        }
+      : {
+          title: 'Speed / max-velocity exposure',
+          headline: 'Touch speed, keep the system fresh.',
+          description: 'Use low-volume, high-quality flys and short accelerations. Take full recovery and end the session if speed drops.',
+          focus: 'Tall hips, elastic contacts, relaxed effort.',
+          exercises: [['Sprint mechanics', 'Dribbles + 2 buildups'], ['Acceleration', '3 x 20m, full recovery'], ['Flying sprint', '4 x 20-30m, 30m build-in'], ['Javelin approach rhythm', '4 x 5-step, submaximal'], ['Easy mobility', '8-10 min']]
+        };
+
   const medballProgression = trainingWeek <= 17
     ? {
         title: 'Med-ball / foundation',
@@ -304,10 +328,10 @@ function syncSelectedDay() {
 function renderSession(index) {
   selectedIndex = index;
   const session = plan[index];
-  const workbookSession = index === 0 ? { title: 'Throwing / ' + throwingProgression.phase, headline: 'Build the engine before the spear.', description: `${throwingProgression.focus}. ${throwingProgression.note}`, focus: throwingProgression.note, exercises: throwingProgression.primary } : index === 1 ? { title: 'Lift 1 / lower + Olympic', headline: 'Power before strength.', description: weekLift.lower, focus: workbookWeek[1], exercises: splitPrescription(weekLift.lower) } : index === 2 ? { title: 'Wednesday / ' + medballProgression.title, headline: 'Ground to arm.', description: medballProgression.description, focus: medballProgression.focus, exercises: medballProgression.exercises } : index === 3 ? { title: 'Plyos + Lift 2 / upper', headline: 'Fast through the ground.', description: weekLift.upper, focus: workbookWeek[1], exercises: splitPrescription(weekLift.upper) } : index === 4 ? { title: 'Friday / ' + plyoProgression.title, headline: 'Elastic, reactive, and stable.', description: plyoProgression.description, focus: 'Own the landing, then express force quickly through one leg.', exercises: plyoProgression.exercises } : index === 5 ? { title: 'Ball throws / volume', headline: 'Repeat strong shapes.', description: throwingProgression.note, focus: throwingProgression.focus, exercises: throwingProgression.saturday } : null;
+  const workbookSession = index === 0 ? { title: 'Monday / ' + sprintProgression.title, tag: 'Speed', headline: sprintProgression.headline, description: sprintProgression.description, focus: sprintProgression.focus, exercises: sprintProgression.exercises } : index === 1 ? { title: 'Lift 1 / lower + Olympic', headline: 'Power before strength.', description: weekLift.lower, focus: workbookWeek[1], exercises: splitPrescription(weekLift.lower) } : index === 2 ? { title: 'Wednesday / ' + medballProgression.title, headline: 'Ground to arm.', description: medballProgression.description, focus: medballProgression.focus, exercises: medballProgression.exercises } : index === 3 ? { title: 'Plyos + Lift 2 / upper', headline: 'Fast through the ground.', description: weekLift.upper, focus: workbookWeek[1], exercises: splitPrescription(weekLift.upper) } : index === 4 ? { title: 'Friday / ' + plyoProgression.title, headline: 'Elastic, reactive, and stable.', description: plyoProgression.description, focus: 'Own the landing, then express force quickly through one leg.', exercises: plyoProgression.exercises } : index === 5 ? { title: 'Ball throws / volume', headline: 'Repeat strong shapes.', description: throwingProgression.note, focus: throwingProgression.focus, exercises: throwingProgression.saturday } : null;
   const displayedSession = workbookSession ? { ...session, ...workbookSession } : session;
   $('sessionTitle').textContent = `${session.day} / ${displayedSession.title}`;
-  $('sessionTag').textContent = session.tag;
+  $('sessionTag').textContent = displayedSession.tag || session.tag;
   $('sessionDate').textContent = index === ((today.getDay() + 6) % 7) ? 'Today' : session.day;
   $('sessionHeadline').textContent = displayedSession.headline;
   $('sessionDescription').textContent = displayedSession.description;
