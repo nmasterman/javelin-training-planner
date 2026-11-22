@@ -1,7 +1,7 @@
 const plan = [
   { day: 'Mon', title: 'Strength / lower body', tag: 'Strength', headline: 'Own the ground.', duration: 60, description: 'Build the legs that make the approach possible. Move with control, then leave the gym feeling sharper than you arrived.', focus: 'Brace before you move. Strong positions make fast positions.', exercises: [['Front squat', '4 x 5'], ['Romanian deadlift', '3 x 8'], ['Single-leg step-up', '3 x 8 / side'], ['Med-ball scoop toss', '4 x 5']] },
   { day: 'Tue', title: 'Technical / standing throw', tag: 'Technique', headline: 'Find the strike.', duration: 50, description: 'Keep the session simple and precise. Feel the right side lead while the arm stays relaxed and fast.', focus: 'The implement follows the body. Do less, but do it on time.', exercises: [['Walking impulse', '4 x 3'], ['Standing throw', '6 x 2'], ['Block drill', '4 x 3'], ['Easy mobility', '10 min']] },
-  { day: 'Wed', title: 'Recovery / mobility', tag: 'Recovery', headline: 'Make room for speed.', duration: 35, description: 'A low-intensity reset for hips, ankles, shoulders, and the nervous system. Leave space for tomorrow.', focus: 'Recovery is training when it protects the next quality session.', exercises: [['Easy bike or walk', '20 min'], ['Hip flow', '2 rounds'], ['T-spine rotation', '2 x 8 / side'], ['Breathing reset', '5 min']], rest: true },
+  { day: 'Wed', title: 'Med-ball throwing', tag: 'Throws', headline: 'Build the throw from the ground.', duration: 55, description: 'A progressive med-ball session from general ground force to javelin-specific positions.', focus: 'Throw hard with clean positions, then stop before speed or shape fades.', exercises: [] },
   { day: 'Thu', title: 'Power / lifts + bounds', tag: 'Power', headline: 'Put force in the floor.', duration: 70, description: 'Crisp, explosive work. Every rep should look like it has somewhere to go.', focus: 'Fast intent, quiet landing. Quality is the volume today.', exercises: [['Hang clean', '5 x 3'], ['Bounds', '4 x 20 m'], ['Push press', '4 x 5'], ['Prowler push', '5 x 15 m']] },
   { day: 'Fri', title: 'Speed + approach', tag: 'Power', headline: 'Fast feet. Long runway.', duration: 65, description: 'Keep the approach elastic and tall. Today is about feeling speed arrive before the implement does.', focus: 'Stay patient through the middle of the approach. The throw starts before the throw.', exercises: [['Approach runs', '6 x 5-step'], ['Impulse rhythm', '5 x 3'], ['Full approach', '6 throws'], ['Band shoulder care', '2 x 12']] },
   { day: 'Sat', title: 'Competition / throws', tag: 'Throws', headline: 'Trust the work.', duration: 75, description: 'A small competition rehearsal. Take your time between throws and let each attempt have a clear intention.', focus: 'Commit to one cue, then let the throw be athletic.', exercises: [['Warm-up sequence', '15 min'], ['Run-throughs', '4 throws'], ['Competition throws', '6 throws'], ['Cooldown', '10 min']] },
@@ -165,6 +165,27 @@ const plyoProgression = trainingWeek <= 17
         exercises: [['Backward overhead shot', '8 throws @ 8 kg'], ['Reactive broad jump', '3 x 4'], ['Single-leg bound to jump', '3 x 4 / side'], ['Hurdle-free pogo series', '3 x 5'], ['Depth drop + jump', '3 x 4'], ['Skater bound + vertical jump', '3 x 4 / side']]
       };
 
+  const medballProgression = trainingWeek <= 17
+    ? {
+        title: 'Med-ball / foundation',
+        description: 'Three sets of each movement. Start general and ground-driven, then finish with controlled overhead and rotational patterns. Rest until the next throw is fast.',
+        focus: 'Create force from the floor before asking the shoulder to finish it.',
+        exercises: [['Throw for height', '3 x 8'], ['Rainbow slam', '3 x 8'], ['Forward-facing shot put', '3 x 6 / side'], ['Regular rotational throw', '3 x 8 / side'], ['Kneeling overhead throw', '3 x 8'], ['Laying down overhead throw', '3 x 8'], ['Shoulder rotational throw', '3 x 6 / side']]
+      }
+    : trainingWeek <= 30
+      ? {
+          title: 'Med-ball / winter volume',
+          description: 'Three sets of each movement. Keep the volume high enough to build throwing power, but use full recovery so each rep stays explosive.',
+          focus: 'Transfer force through the hips and trunk without rushing the arm.',
+          exercises: [['Rainbow slam', '3 x 8'], ['Forward-facing shot put', '3 x 8 / side'], ['Regular rotational throw', '3 x 8 / side'], ['Overhead throw with a step', '3 x 8 / side'], ['Three-step shoulder throw', '3 x 6 / side'], ['Rock the baby throw', '3 x 8 / side'], ['Laying down one-arm throw', '3 x 6 / side'], ['Three-step overhead throw', '3 x 6 / side']]
+        }
+      : {
+          title: 'Med-ball / specific power',
+          description: 'Three sets of each movement with full recovery. Progress toward the positions and rhythm that transfer to the javelin, without chasing fatigue.',
+          focus: 'Keep the implement behind the body, then let the block and trunk deliver it.',
+          exercises: [['Forward-facing shot put', '3 x 6 / side'], ['Shoulder rotational throw', '3 x 6 / side'], ['Overhead throw with a step', '3 x 6 / side'], ['Three-step overhead throw', '3 x 6 / side'], ['Three-step shoulder throw', '3 x 6 / side'], ['Stationary block throw', '3 x 6 / side'], ['Laying down one-arm throw', '3 x 6 / side'], ['Kneeling shoulder throw', '3 x 6 / side']]
+        };
+
 const weekKey = `flight-plan-week-${trainingWeek}`;
 const legacyDayKey = `flight-plan-${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`;
 const state = JSON.parse(localStorage.getItem(weekKey) || localStorage.getItem(legacyDayKey) || '{"completed":{},"notes":{}}');
@@ -283,7 +304,7 @@ function syncSelectedDay() {
 function renderSession(index) {
   selectedIndex = index;
   const session = plan[index];
-  const workbookSession = index === 0 ? { title: 'Throwing / ' + throwingProgression.phase, headline: 'Build the engine before the spear.', description: `${throwingProgression.focus}. ${throwingProgression.note}`, focus: throwingProgression.note, exercises: throwingProgression.primary } : index === 1 ? { title: 'Lift 1 / lower + Olympic', headline: 'Power before strength.', description: weekLift.lower, focus: workbookWeek[1], exercises: splitPrescription(weekLift.lower) } : index === 3 ? { title: 'Plyos + Lift 2 / upper', headline: 'Fast through the ground.', description: weekLift.upper, focus: workbookWeek[1], exercises: splitPrescription(weekLift.upper) } : index === 4 ? { title: 'Friday / ' + plyoProgression.title, headline: 'Elastic, reactive, and stable.', description: plyoProgression.description, focus: 'Own the landing, then express force quickly through one leg.', exercises: plyoProgression.exercises } : index === 5 ? { title: 'Ball throws / volume', headline: 'Repeat strong shapes.', description: throwingProgression.note, focus: throwingProgression.focus, exercises: throwingProgression.saturday } : null;
+  const workbookSession = index === 0 ? { title: 'Throwing / ' + throwingProgression.phase, headline: 'Build the engine before the spear.', description: `${throwingProgression.focus}. ${throwingProgression.note}`, focus: throwingProgression.note, exercises: throwingProgression.primary } : index === 1 ? { title: 'Lift 1 / lower + Olympic', headline: 'Power before strength.', description: weekLift.lower, focus: workbookWeek[1], exercises: splitPrescription(weekLift.lower) } : index === 2 ? { title: 'Wednesday / ' + medballProgression.title, headline: 'Ground to arm.', description: medballProgression.description, focus: medballProgression.focus, exercises: medballProgression.exercises } : index === 3 ? { title: 'Plyos + Lift 2 / upper', headline: 'Fast through the ground.', description: weekLift.upper, focus: workbookWeek[1], exercises: splitPrescription(weekLift.upper) } : index === 4 ? { title: 'Friday / ' + plyoProgression.title, headline: 'Elastic, reactive, and stable.', description: plyoProgression.description, focus: 'Own the landing, then express force quickly through one leg.', exercises: plyoProgression.exercises } : index === 5 ? { title: 'Ball throws / volume', headline: 'Repeat strong shapes.', description: throwingProgression.note, focus: throwingProgression.focus, exercises: throwingProgression.saturday } : null;
   const displayedSession = workbookSession ? { ...session, ...workbookSession } : session;
   $('sessionTitle').textContent = `${session.day} / ${displayedSession.title}`;
   $('sessionTag').textContent = session.tag;
