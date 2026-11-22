@@ -147,6 +147,24 @@ const throwingProgression = trainingWeek <= 12
         saturday: [['Warm-up sequence', '15 min'], ['Run-throughs', '4 throws'], ['Competition throws', '6 throws'], ['Cooldown', '10 min']]
       };
 
+const plyoProgression = trainingWeek <= 17
+  ? {
+      title: 'Plyos / foundation',
+      description: 'Eight controlled 8 kg backward overhead shot throws, then three quality sets of each movement. Stick every landing and stop before contacts get noisy.',
+      exercises: [['Backward overhead shot', '8 throws @ 8 kg'], ['Broad jump', '3 x 4'], ['Alternating bounds', '3 x 5 / side'], ['Single-leg pogo', '3 x 5 / side'], ['Depth drop + stick', '3 x 4'], ['Skater bound + stick', '3 x 4 / side']]
+    }
+  : trainingWeek <= 30
+    ? {
+        title: 'Plyos / winter volume',
+        description: 'Eight controlled 8 kg backward overhead shot throws, then three quality sets of each movement. Build elastic capacity without turning this into a conditioning circuit.',
+        exercises: [['Backward overhead shot', '8 throws @ 8 kg'], ['Broad jump', '3 x 5'], ['Single-leg bounds', '3 x 4 / side'], ['Pogo to broad jump', '3 x 4'], ['Depth drop + vertical jump', '3 x 4'], ['Lateral bound + stick', '3 x 5 / side']]
+      }
+    : {
+        title: 'Plyos / power conversion',
+        description: 'Eight high-quality 8 kg backward overhead shot throws, then three sets of explosive contacts with full recovery. Keep the jump crisp and stop when velocity drops.',
+        exercises: [['Backward overhead shot', '8 throws @ 8 kg'], ['Reactive broad jump', '3 x 4'], ['Single-leg bound to jump', '3 x 4 / side'], ['Hurdle-free pogo series', '3 x 5'], ['Depth drop + jump', '3 x 4'], ['Skater bound + vertical jump', '3 x 4 / side']]
+      };
+
 const weekKey = `flight-plan-week-${trainingWeek}`;
 const legacyDayKey = `flight-plan-${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`;
 const state = JSON.parse(localStorage.getItem(weekKey) || localStorage.getItem(legacyDayKey) || '{"completed":{},"notes":{}}');
@@ -265,7 +283,7 @@ function syncSelectedDay() {
 function renderSession(index) {
   selectedIndex = index;
   const session = plan[index];
-  const workbookSession = index === 0 ? { title: 'Throwing / ' + throwingProgression.phase, headline: 'Build the engine before the spear.', description: `${throwingProgression.focus}. ${throwingProgression.note}`, focus: throwingProgression.note, exercises: throwingProgression.primary } : index === 1 ? { title: 'Lift 1 / lower + Olympic', headline: 'Power before strength.', description: weekLift.lower, focus: workbookWeek[1], exercises: splitPrescription(weekLift.lower) } : index === 3 ? { title: 'Plyos + Lift 2 / upper', headline: 'Fast through the ground.', description: weekLift.upper, focus: workbookWeek[1], exercises: splitPrescription(weekLift.upper) } : index === 4 ? { title: 'Lift 3 / recovery', headline: 'Keep the system fresh.', description: weekLift.recovery, focus: workbookWeek[2], exercises: splitPrescription(weekLift.recovery) } : index === 5 ? { title: 'Ball throws / volume', headline: 'Repeat strong shapes.', description: throwingProgression.note, focus: throwingProgression.focus, exercises: throwingProgression.saturday } : null;
+  const workbookSession = index === 0 ? { title: 'Throwing / ' + throwingProgression.phase, headline: 'Build the engine before the spear.', description: `${throwingProgression.focus}. ${throwingProgression.note}`, focus: throwingProgression.note, exercises: throwingProgression.primary } : index === 1 ? { title: 'Lift 1 / lower + Olympic', headline: 'Power before strength.', description: weekLift.lower, focus: workbookWeek[1], exercises: splitPrescription(weekLift.lower) } : index === 3 ? { title: 'Plyos + Lift 2 / upper', headline: 'Fast through the ground.', description: weekLift.upper, focus: workbookWeek[1], exercises: splitPrescription(weekLift.upper) } : index === 4 ? { title: 'Friday / ' + plyoProgression.title, headline: 'Elastic, reactive, and stable.', description: plyoProgression.description, focus: 'Own the landing, then express force quickly through one leg.', exercises: plyoProgression.exercises } : index === 5 ? { title: 'Ball throws / volume', headline: 'Repeat strong shapes.', description: throwingProgression.note, focus: throwingProgression.focus, exercises: throwingProgression.saturday } : null;
   const displayedSession = workbookSession ? { ...session, ...workbookSession } : session;
   $('sessionTitle').textContent = `${session.day} / ${displayedSession.title}`;
   $('sessionTag').textContent = session.tag;
