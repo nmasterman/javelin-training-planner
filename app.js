@@ -52,7 +52,10 @@ const seasonBlocks = [
   ['Base preparation III', 'Highest ball-throw volume and general strength', 'Finish the base before adding javelin intensity.'],
   ['Transition I', 'Ball throws plus controlled javelin positions', 'Javelin stays submaximal; ball volume remains high.'],
   ['Transition II', 'More approach rhythm and javelin-specific power', 'Quality rises while total volume comes down.'],
-  ['Specific preparation I', 'Low-medium throwing volume with crisp technical work', 'Strength begins converting to speed.'],
+  ['High-volume strength I', 'High-volume ball throws, sprint mechanics, and general strength', 'Build work capacity without turning every throw into a max effort.'],
+  ['High-volume strength II', 'Progressive lower-body strength and rotational throwing power', 'Add volume gradually; keep two high-quality throwing exposures.'],
+  ['High-volume strength III', 'Heavy general strength with medicine-ball power', 'Finish the winter base before chasing maximal javelin intensity.'],
+  ['Strength-to-power transition', 'Faster lifts, jumps, sprints, and explosive ball throws', 'Reduce lifting volume as velocity and throwing intent rise.'],
   ['Power conversion', 'Short, sharp javelin work at high intent', 'Long recoveries keep speed high.'],
   ['Specific power', 'Competition rhythm and high-quality approaches', 'Low-medium volume, high intent.'],
   ['Pre-competition I', 'Meet rhythm and full-speed technical work', 'Maintenance lifting and less fatigue.'],
@@ -65,11 +68,11 @@ const phaseLiftTemplates = [
   ['Power clean 5x2 @70-75%; trap bar deadlift 5x4 @RPE 8; RFESS 4x5/side; RDL 3x5', 'Push press 5x3; weighted pull-up 4x4; 1-arm row 4x6/side; face pull 3x12', 'Step-up 3x6/side; adductor slide lunge 3x6/side; anti-rotation press 3x10/side; calf iso 3x20s'],
   ['Hang power clean 5x2 @70-80%; trap bar jump 5x3; dynamic front squat 5x2 @55-65%; RFESS 3x4/side', 'Push jerk 5x2; high pull 4x3; weighted pull-up 4x4; chest-supported row 3x6', 'Pogo hops 3x20; step-up jump 3x3/side; Pallof press 3x8/side; sled drag 3x15m'],
   ['Power clean 4x2 @75-80%; front squat 4x2 @RPE 8; RFESS 3x4/side; RDL 3x4', 'Push jerk 4x2; high pull 4x3; weighted pull-up 4x3; row 3x5', 'Bounds 3x20m; hip airplane 3x4/side; Pallof press 3x8/side; sled drag 3x20m'],
-  ['Power clean 5x2 @75-85%; trap bar deadlift 5x2 @RPE 8-9; front squat 4x3; Nordic 3x4', 'Push press 5x2; weighted pull-up 5x3; row 4x5; band ER 2x12', 'Split squat iso 3x20s/side; hip airplane 3x4/side; Pallof press 3x8/side; sled drag 4x20m'],
-  ['Power clean 4x2 @70-80%; front squat 4x2 @RPE 7; RFESS 3x4/side; RDL 3x4', 'Push jerk 4x2; high pull 4x3; pull-up 4x3; row 3x5', 'Step-up jump 3x3/side; anti-rotation press 3x8/side; hip airplane 2x4/side; sled drag 3x20m'],
-  ['Power clean 4x2 @60-70%; trap bar jump 4x3; dynamic front squat 4x2 @50-60%; split squat 3x4/side', 'Push press 4x2; high pull 4x3; pull-up 3x3; row 3x5', 'Pogo 4x15; bounds 3x20m; dead bug 3x8; light carries'],
-  ['Power clean 4x2 @60-70%; trap bar jump 4x3; dynamic front squat 4x2 @50-60%; RFESS 3x4/side', 'Push press 4x2; pull-up 4x3; row 3x5; band ER 2x12', 'Step-up jump 3x3/side; Pallof press 3x8/side; mobility finish'],
-  ['Power clean 4x2 @60-70%; front squat 4x2 @RPE 6-7; split squat 3x3/side; RDL 3x4', 'Push press 4x2; pull-up 4x3; row 3x5; band ER 2x12', 'Copenhagen plank 3x20s/side; Pallof press 3x8/side; sled drag 3x15m; mobility'],
+  ['Power clean 5x3 @70%; trap bar deadlift 5x5 @RPE 7; front squat 4x6; RFESS 3x8/side', 'Push press 5x5; pull-up 4x6; row 4x8; band ER 3x15', 'Med-ball scoop toss 5x6/side; Copenhagen plank 3x25s/side; sled drag 4x20m'],
+  ['Power clean 5x3 @70-75%; front squat 5x5 @RPE 7-8; RDL 4x6; split squat 3x8/side', 'Push press 5x4; weighted pull-up 4x5; row 4x8; face pull 3x15', 'Rotational shot throw 5x5/side; step-up 3x8/side; Pallof press 3x10/side'],
+  ['Power clean 4x3 @75%; trap bar deadlift 5x4 @RPE 8; front squat 4x5; Nordic 3x5', 'Push press 4x4; weighted pull-up 4x4; row 4x6; band ER 3x12', 'Overhead backward throw 5x5; split-stance punch throw 4x5/side; sled drag 4x20m'],
+  ['Power clean 4x2 @70-80%; front squat 4x4 @RPE 8; RFESS 3x6/side; RDL 3x5', 'Push jerk 4x3; high pull 4x3; pull-up 4x4; row 3x6', 'Med-ball scoop toss 4x5/side; bounds 4x20m; acceleration 6x20m'],
+  ['Power clean 4x2 @60-70%; trap bar jump 4x3; dynamic front squat 4x2 @50-60%; split squat 3x4/side', 'Push press 4x2; high pull 4x3; pull-up 3x3; row 3x5', 'Pogo 4x15; step-behind throw 4x4/side; accelerations 6x30m'],
   ['Power clean 2x2 @60%; front squat 2x2 @RPE 6; split squat 2x3/side; RDL 2x3', 'Push press 2x2; pull-up 2x3; row 2x5; band ER 2x12', 'Recovery only: mobility, trunk, hips, adductors, and easy carries'],
   ['Hang power clean 4x3 @60-70%; front squat 4x5 @RPE 7; split squat 3x6/side; RDL 3x6', 'Push press 4x3; pull-up 4x5; chest-supported row 3x8; band ER 2x15', 'Cossack squat 3x6/side; Copenhagen plank 3x20s/side; sled drag 4x20m'],
   ['Power clean 3x2 @70-80%; front squat 3x2 @RPE 7; RFESS 2x4/side; RDL 2x4', 'Push press 3x2; pull-up 3x3; row 2x5; band ER 2x12', 'Pogo 2x15; dead bug 2x8; side plank 2x20s/side; light carries']
@@ -109,7 +112,7 @@ const throwingProgression = trainingWeek <= 12
       primary: [['Med-ball chest pass', '5 x 8'], ['Med-ball scoop toss', '5 x 8 / side'], ['Rotational shot throw', '5 x 6 / side'], ['Overhead backward throw', '4 x 8']],
       saturday: [['Med-ball circuit', '4 rounds'], ['Scoop toss', '6 x 5 / side'], ['Chest pass', '6 x 5'], ['Easy mobility', '10 min']]
     }
-  : trainingWeek <= 24
+  : trainingWeek <= 17
     ? {
         phase: 'Transition / mixed implements',
         focus: 'Keep ball volume high while introducing controlled javelin positions',
@@ -117,7 +120,23 @@ const throwingProgression = trainingWeek <= 12
         primary: [['Med-ball scoop toss', '5 x 6 / side'], ['Run-up rhythm', '6 x 5-step'], ['Standing javelin', '6 x 3'], ['Chest pass', '4 x 6']],
         saturday: [['Med-ball power circuit', '3 rounds'], ['Standing javelin', '8 throws'], ['Short approach', '6 throws'], ['Cooldown', '10 min']]
       }
-    : {
+    : trainingWeek <= 30
+      ? {
+          phase: 'Winter volume / throwing power',
+          focus: 'Build repeatable strength and throwing power with high-quality medicine-ball volume',
+          note: 'Use intent on every rep, but leave one or two quality reps in reserve.',
+          primary: [['Med-ball scoop toss', '5 x 8 / side'], ['Shot-put style scoop throw', '5 x 6 / side'], ['Overhead backward throw', '4 x 8'], ['Rotational chest pass', '4 x 8 / side']],
+          saturday: [['Step-behind rotational throw', '4 x 6 / side'], ['Split-stance punch throw', '4 x 6 / side'], ['Plyo push-up', '4 x 5'], ['Hill sprint', '6 x 20m']]
+        }
+      : trainingWeek <= 39
+        ? {
+            phase: 'Spring power conversion',
+            focus: 'Convert winter strength into faster, more specific throwing power',
+            note: 'Low fatigue, full intent. Stop power work when speed or mechanics drop.',
+            primary: [['Med-ball scoop toss', '4 x 5 / side'], ['Shot-put style throw', '4 x 4 / side'], ['Approach rhythm', '5 x 5-step'], ['Standing javelin', '5 x 2']],
+            saturday: [['Step-behind throw', '4 x 4 / side'], ['Overhead backward throw', '3 x 5'], ['Bounds', '4 x 20m'], ['Accelerations', '6 x 30m']]
+          }
+      : {
         phase: 'Specific preparation / javelin',
         focus: 'Progress from controlled approaches toward high-quality javelin throws',
         note: 'Full-speed throwing comes after the base is earned. Keep quality ahead of volume.',
