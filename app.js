@@ -170,20 +170,20 @@ const plyoProgression = trainingWeek <= 17
         title: 'Med-ball / foundation',
         description: 'Three sets of each movement. Start general and ground-driven, then finish with controlled overhead and rotational patterns. Rest until the next throw is fast.',
         focus: 'Create force from the floor before asking the shoulder to finish it.',
-        exercises: [['Throw for height', '3 x 8'], ['Rainbow slam', '3 x 8'], ['Forward-facing shot put', '3 x 6 / side'], ['Regular rotational throw', '3 x 8 / side'], ['Kneeling overhead throw', '3 x 8'], ['Laying down overhead throw', '3 x 8'], ['Shoulder rotational throw', '3 x 6 / side']]
+        exercises: [['Underhand forward toss', '3 x 8'], ['Throw for height', '3 x 8'], ['Rainbow slam', '3 x 8'], ['Split-stance chest pass', '3 x 8 / side'], ['Forward-facing shot put', '3 x 6 / side'], ['Regular rotational throw', '3 x 8 / side'], ['Half-kneeling rotational throw', '3 x 6 / side'], ['Kneeling overhead throw', '3 x 8']]
       }
     : trainingWeek <= 30
       ? {
           title: 'Med-ball / winter volume',
           description: 'Three sets of each movement. Keep the volume high enough to build throwing power, but use full recovery so each rep stays explosive.',
           focus: 'Transfer force through the hips and trunk without rushing the arm.',
-          exercises: [['Rainbow slam', '3 x 8'], ['Forward-facing shot put', '3 x 8 / side'], ['Regular rotational throw', '3 x 8 / side'], ['Overhead throw with a step', '3 x 8 / side'], ['Three-step shoulder throw', '3 x 6 / side'], ['Rock the baby throw', '3 x 8 / side'], ['Laying down one-arm throw', '3 x 6 / side'], ['Three-step overhead throw', '3 x 6 / side']]
+          exercises: [['Underhand forward toss', '3 x 8'], ['Rainbow slam', '3 x 8'], ['Forward-facing shot put', '3 x 8 / side'], ['Regular rotational throw', '3 x 8 / side'], ['Overhead throw with a step', '3 x 8 / side'], ['Three-step shoulder throw', '3 x 6 / side'], ['Rock the baby throw', '3 x 8 / side'], ['Laying down one-arm throw', '3 x 6 / side'], ['Three-step overhead throw', '3 x 6 / side']]
         }
       : {
           title: 'Med-ball / specific power',
           description: 'Three sets of each movement with full recovery. Progress toward the positions and rhythm that transfer to the javelin, without chasing fatigue.',
           focus: 'Keep the implement behind the body, then let the block and trunk deliver it.',
-          exercises: [['Forward-facing shot put', '3 x 6 / side'], ['Shoulder rotational throw', '3 x 6 / side'], ['Overhead throw with a step', '3 x 6 / side'], ['Three-step overhead throw', '3 x 6 / side'], ['Three-step shoulder throw', '3 x 6 / side'], ['Stationary block throw', '3 x 6 / side'], ['Laying down one-arm throw', '3 x 6 / side'], ['Kneeling shoulder throw', '3 x 6 / side']]
+          exercises: [['Split-stance chest pass', '3 x 6 / side'], ['Open-step shot put', '3 x 6 / side'], ['Shoulder rotational throw', '3 x 6 / side'], ['Overhead throw with a step', '3 x 6 / side'], ['Three-step overhead throw', '3 x 6 / side'], ['Three-step shoulder throw', '3 x 6 / side'], ['Stationary block throw', '3 x 6 / side'], ['Laying down one-arm throw', '3 x 6 / side'], ['Kneeling shoulder throw', '3 x 6 / side']]
         };
 
 const weekKey = `flight-plan-week-${trainingWeek}`;
