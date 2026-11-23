@@ -341,7 +341,7 @@ function renderSession(index) {
   $('exerciseList').innerHTML = displayedSession.exercises.map(([name, details]) => {
    if (session.rest) return `<div class="exercise"><div class="exercise-details"><strong>${name}</strong><span>${details}</span></div></div>`;
     const setMatch = String(details).match(/^(\d+)\s*x/);
-    const setCount = setMatch ? Number(setMatch[1]) : 0;
+    const setCount = [0, 2, 4].includes(index) ? 0 : (setMatch ? Number(setMatch[1]) : 0);
     const setInputs = Array.from({ length: setCount }, (_, setIndex) => {
       const setNumber = setIndex + 1;
       const current = currentWeightEntry(index, name, setNumber);
